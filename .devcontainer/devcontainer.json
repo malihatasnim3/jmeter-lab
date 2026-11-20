@@ -1,18 +1,27 @@
+
 {
-"name": "jmeter-lab",
-"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-"features": {
-"ghcr.io/devcontainers/features/java:1": { "version": "17" },
-"ghcr.io/devcontainers/features/desktop-lite:1": {}
-},
-"remoteEnv": { "PATH": "${containerEnv:PATH}:/home/vscode/jmeter/bin" },
-"forwardPorts": [6080, 8000],
-"portsAttributes": {
-"6080": { "label": "noVNC Desktop", "onAutoForward": "openBrowser" },
-"8000": { "label": "HTML Report", "onAutoForward": "notify" }
-},
-"postCreateCommand": "mkdir -p ~/jmeter && curl -fsSL
-https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz | tar -
-xz -C ~/jmeter --strip-components=1 && mkdir -p plans results data && touch
-plans/.gitkeep results/.gitkeep data/.gitkeep"
+  "name": "jmeter-lab",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17"
+    },
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+  "remoteEnv": {
+    "PATH": "${containerEnv:PATH}:/home/vscode/jmeter/bin"
+  },
+  "forwardPorts": [6080, 8000],
+  "portsAttributes": {
+    "6080": {
+      "label": "noVNC Desktop",
+      "onAutoForward": "openBrowser"
+    },
+    "8000": {
+      "label": "HTML Report",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "mkdir -p /home/vscode/jmeter plans results data && curl -fSL --retry 3 -o /tmp/apache-jmeter-5.6.3.tgz https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz && tar -xzf /tmp/apache-jmeter-5.6.3.tgz -C /home/vscode/jmeter --strip-components=1 && touch plans/.gitkeep results/.gitkeep data/.gitkeep && /home/vscode/jmeter/bin/jmeter -v"
 }
+
